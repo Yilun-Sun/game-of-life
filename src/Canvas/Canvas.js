@@ -1,4 +1,5 @@
 import React from 'react';
+import {setGen} from '../App';
 
 
 function filledNode(props) {
@@ -20,7 +21,7 @@ const height = rows * rectWidth;
 // const height = 800;
 var generation = 0;
 
-const timestep = 100;
+const timestep = 50;
 
 var nodes = [];
 
@@ -33,8 +34,6 @@ var canvasElementOffsetTop;
 // 2. 
 // 3. 
 // 4. 
-
-
 
 function createNode(row, col, isLife, ctx) {
     var object = new Object();
@@ -94,7 +93,7 @@ function createNode(row, col, isLife, ctx) {
     }
 
     object.show = function () {
-        filledNode({ ctx: this.ctx, indexCol: this.col, indexRow: this.row, color: this.isLife ? "#111111" : "#FFFFFB" });
+        filledNode({ ctx: this.ctx, indexCol: this.col, indexRow: this.row, color: this.isLife ? "#FFFFFB" : "#111111" });
     }
 
     object.nextGen = function () {
@@ -128,7 +127,11 @@ function draw() {
     });
 
     generation++;
-    console.log(generation);
+    // console.log(generation);
+
+    const textAre = document.getElementById("gentext");
+    textAre.innerText = 'generations: ' + generation;
+    // setGen(generation);
 
     setTimeout(function () { window.requestAnimationFrame(draw); }, timestep);
     // var raf = window.requestAnimationFrame(draw);
@@ -167,16 +170,22 @@ class Canvas extends React.Component {
         const ctx = this.refs.canvas.getContext('2d');
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
-                if ((i * j) % 3 === 0) {
-                    var node1 = createNode(i, j, true, ctx);
-                    nodes.push(node1);
-                }
-                else {
-                    var node2 = createNode(i, j, false, ctx);
-                    nodes.push(node2);
-                }
+                // if ((i * j) % 3 === 0) {
+                //     var node1 = createNode(i, j, true, ctx);
+                //     nodes.push(node1);
+                // }
+                // else {
+                //     var node2 = createNode(i, j, false, ctx);
+                //     nodes.push(node2);
+                // }
+                const temp = Math.random();
+
+                var node1 = createNode(i, j, temp > 0.7 ? true : false, ctx);
+                nodes.push(node1);
             }
         }
+
+        // document.getElementById("gentext").value = 'generations: 111';
 
         draw();
     }
@@ -189,3 +198,6 @@ class Canvas extends React.Component {
 }
 
 export default Canvas;
+export const getGeneration = () => { 
+    return generation; 
+} 

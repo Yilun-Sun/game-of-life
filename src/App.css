@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.Heading2 {
+  color: aliceblue;
+  font-size: 40px;
+}
+
+.Heading3 {
+  color: aliceblue;
+  font-size: 25px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
